@@ -95,7 +95,7 @@ func (p *TBinaryProtocol) WriteMessageBegin(name string, typeId TMessageType, se
 		if e != nil {
 			return e
 		}
-		e = p.WriteByte(byte(typeId))
+		e = p.WriteByte(int8(typeId))
 		if e != nil {
 			return e
 		}
@@ -117,7 +117,7 @@ func (p *TBinaryProtocol) WriteStructEnd() error {
 }
 
 func (p *TBinaryProtocol) WriteFieldBegin(name string, typeId TType, id int16) error {
-	e := p.WriteByte(byte(typeId))
+	e := p.WriteByte(int8(typeId))
 	if e != nil {
 		return e
 	}
@@ -135,11 +135,11 @@ func (p *TBinaryProtocol) WriteFieldStop() error {
 }
 
 func (p *TBinaryProtocol) WriteMapBegin(keyType TType, valueType TType, size int) error {
-	e := p.WriteByte(byte(keyType))
+	e := p.WriteByte(int8(keyType))
 	if e != nil {
 		return e
 	}
-	e = p.WriteByte(byte(valueType))
+	e = p.WriteByte(int8(valueType))
 	if e != nil {
 		return e
 	}
@@ -152,7 +152,7 @@ func (p *TBinaryProtocol) WriteMapEnd() error {
 }
 
 func (p *TBinaryProtocol) WriteListBegin(elemType TType, size int) error {
-	e := p.WriteByte(byte(elemType))
+	e := p.WriteByte(int8(elemType))
 	if e != nil {
 		return e
 	}
@@ -165,7 +165,7 @@ func (p *TBinaryProtocol) WriteListEnd() error {
 }
 
 func (p *TBinaryProtocol) WriteSetBegin(elemType TType, size int) error {
-	e := p.WriteByte(byte(elemType))
+	e := p.WriteByte(int8(elemType))
 	if e != nil {
 		return e
 	}
@@ -184,8 +184,8 @@ func (p *TBinaryProtocol) WriteBool(value bool) error {
 	return p.WriteByte(0)
 }
 
-func (p *TBinaryProtocol) WriteByte(value byte) error {
-	e := p.trans.WriteByte(value)
+func (p *TBinaryProtocol) WriteByte(value int8) error {
+	e := p.trans.WriteByte(byte(value))
 	return NewTProtocolException(e)
 }
 
@@ -398,9 +398,9 @@ func (p *TBinaryProtocol) ReadBool() (bool, error) {
 	return v, e
 }
 
-func (p *TBinaryProtocol) ReadByte() (byte, error) {
+func (p *TBinaryProtocol) ReadByte() (int8, error) {
 	v, err := p.trans.ReadByte()
-	return byte(v), err
+	return int8(v), err
 }
 
 func (p *TBinaryProtocol) ReadI16() (value int16, err error) {

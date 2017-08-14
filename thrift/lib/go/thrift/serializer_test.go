@@ -78,7 +78,7 @@ func ProtocolTest1(test *testing.T, pf ProtocolFactory) (bool, error) {
 	t.Protocol = pf.GetProtocol(t.Transport)
 	var m = MyTestStruct{}
 	m.On = true
-	m.B = byte(0)
+	m.B = int8(0)
 	m.Int16 = 1
 	m.Int32 = 2
 	m.Int64 = 3
@@ -112,7 +112,7 @@ func ProtocolTest2(test *testing.T, pf ProtocolFactory) (bool, error) {
 	t.Protocol = pf.GetProtocol(t.Transport)
 	var m = MyTestStruct{}
 	m.On = false
-	m.B = byte(0)
+	m.B = int8(0)
 	m.Int16 = 1
 	m.Int32 = 2
 	m.Int64 = 3

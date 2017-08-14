@@ -314,14 +314,15 @@ func (t *THeaderTransport) Read(buf []byte) (int, error) {
 }
 
 // ReadByte Read a single byte from the current framebuffer. EOF if the frame is done.
-func (t *THeaderTransport) ReadByte() (byte, error) {
+func (t *THeaderTransport) ReadByte() (int8, error) {
 	// If we detected unframed, just pass the transport up
 	if t.clientType == UnframedDeprecated || t.clientType == UnframedCompactDeprecated {
-		return t.framebuf.ReadByte()
+		b, err := t.framebuf.ReadByte()
+		return int8(b), err
 	}
 	b, err := t.framebuf.ReadByte()
 	t.frameSize--
-	return b, err
+	return int8(b), err
 }
 
 // Write Write multiple bytes to the framebuffer, does not send to transport.
@@ -331,8 +332,8 @@ func (t *THeaderTransport) Write(buf []byte) (int, error) {
 }
 
 // WriteByte Write a single byte to the framebuffer, does not send to transport.
-func (t *THeaderTransport) WriteByte(c byte) error {
-	err := t.wbuf.WriteByte(c)
+func (t *THeaderTransport) WriteByte(c int8) error {
+	err := t.wbuf.WriteByte(byte(c))
 	return NewTTransportExceptionFromError(err)
 }
 

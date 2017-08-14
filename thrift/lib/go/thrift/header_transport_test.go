@@ -283,7 +283,7 @@ func TestHeaderRWSmall(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to readbyte frame %d: %s", n, err)
 	}
-	assertEq(t, outb, []byte("A")[0])
+	assertEq(t, outb, int8([]byte("A")[0]))
 
 	outstr := make([]byte, 3)
 	read, err = trans.Read(outstr)
